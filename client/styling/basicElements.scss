@@ -1,0 +1,105 @@
+///////
+/* Basic Colors & Layout Styling */
+///////
+
+// colors:
+
+// bold
+
+// dark
+
+// light
+
+// translucent
+
+/////////////////
+
+///////
+/* Flexbox Grid System */
+///////
+
+.flex-grid {
+  display: flex;
+}
+
+.flex-grid-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.col-3 {
+  flex: 1;
+}
+
+.col-1 {
+  flex: 2;
+}
+
+.col-2 {
+  flex: 3;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/////////////////
+
+///////
+/* Basic Elements Styling */
+///////
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f6f3eb;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+/*
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+body {
+
+  a, a:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  button {
+    -webkit-appearance: button;
+    cursor: pointer;
+  }
+
+  hr {
+    border-width: 0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  nav {
+    display: block;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+*/

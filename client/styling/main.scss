@@ -1,0 +1,189 @@
+///////
+/* Main Components */
+///////
+
+///////
+/* Browse Page CSS */
+///////
+
+.titlebar-browse {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: #222;
+}
+.titlebar-browse h1 {
+  margin: auto;
+  color: #f6f3eb;
+}
+.titlebar-browse h2 {
+  position: absolute;
+  margin: auto 10px;
+  color: black;
+  background-color: #c2a661;
+  border: 1px solid white;
+}
+
+.button-route-browse:hover span, .button-route-favorites:hover span, .button-route-search:hover span {
+  color: #c2a661;
+}
+
+@-webkit-keyframes add-button-active-route {
+  0% {
+    -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+    box-shadow: inset 0 0 0 0 #c2a661;
+  }
+  100% {
+    -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+    box-shadow: inset 0 -15px 0 0 #c2a661;
+  }
+}
+@keyframes add-button-active-route {
+  0% {
+    -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+    box-shadow: inset 0 0 0 0 #c2a661;
+  }
+  100% {
+    -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+    box-shadow: inset 0 -15px 0 0 #c2a661;
+  }
+}
+
+.button-route-browse, .button-route-favorites, .button-route-search {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+  box-shadow: inset 0 0 0 0 #c2a661;
+}
+
+.button-active-route {
+  -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+  box-shadow: inset 0 -15px 0 0 #c2a661;
+  -webkit-animation: .75s add-button-active-route;
+  animation: .75s add-button-active-route;
+}
+
+.div-filter-input {
+  display: flex;
+}
+
+.div-filter-input p {
+  margin: auto;
+}
+
+.items-grid > div {
+  width: 90%;
+  height: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: -2px;
+}
+
+.tile-container {
+  width: 30%;
+  padding: 2px;
+}
+
+.tile-container a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tile-container img {
+  width: 100%;
+  position: relative;
+}
+
+.tile-container:hover img {
+  top: -10px;
+  filter: contrast(130%);
+}
+
+.div-img-background {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.button-load-more:hover span {
+  color: white;
+}
+
+///////
+/* Item Page CSS */
+///////
+
+.card-container-outer {
+  margin: 10px 5px;
+}
+
+.card-container, .card-container-image, .card-container-description, .card-container-col3 {
+  margin: 10px;
+}
+
+.card-container-image, .card-container-col3 {
+  flex: 1 2 0%;
+}
+
+.card-container-description {
+  margin-top: 20px;
+  flex: 1 2 0%;
+}
+
+.favorite-checkbox > div {
+  justify-content: flex-end;
+}
+
+.card-title br {
+  line-height: 50px;
+}
+
+.description-measurements, .card-container-description p {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.card-container-description p {
+  max-width: 550px;
+}
+
+.title-price, .p-item-description {
+  color: #776868;
+}
+
+.button-purchase:hover span, .button-make-offer:hover span, .button-back-to-browse:hover span {
+  color: white;
+}
+
+@-webkit-keyframes move-back-to-browse-arrow {
+  0% {
+    fill: #c2a661;
+    left: 0;
+  }
+  10%, 100% {
+    fill: white;
+    left: -15px;
+  }
+}
+@keyframes move-back-to-browse-arrow {
+  0% {
+    fill: #c2a661;
+    left: 0;
+  }
+  10%, 100% {
+    fill: white;
+    left: -15px;
+  }
+}
+
+.button-back-to-browse:hover svg {
+  position: relative;
+  -webkit-animation: 3s infinite move-back-to-browse-arrow;
+  animation: 3s infinite move-back-to-browse-arrow;
+}

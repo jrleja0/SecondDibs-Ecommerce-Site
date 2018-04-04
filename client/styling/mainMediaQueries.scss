@@ -1,0 +1,66 @@
+///////
+/* Media Queries - largest to smallest max-width */
+///////
+
+@media (max-width: 1200px) {
+  .col-3 {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .tile-container {
+    width: 48%;
+  }
+}
+
+@media (max-width: 767px) {
+  .flex-grid {
+    display: block;
+  }
+
+  .flex-grid-column {
+    display: block;
+    height: auto;
+  }
+
+  .items-grid > div {
+    flex-flow: column wrap;
+  }
+
+  .tile-container {
+    width: 100%;
+  }
+
+  .tile-container img {
+    transform: translateY(0%) !important;
+  }
+
+  .card-container-image {
+    max-width: 400px;
+    margin: 10px auto;
+  }
+
+  .card-container, .card-container-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .titlebar-browse h1 {
+    margin: auto 0;
+  }
+  .titlebar-browse h2 {
+    position: relative;
+  }
+}
+
+@media (max-width: 399px) {
+  .titlebar-browse h1 {
+    font-size: 1.5em;
+  }
+  .titlebar-browse h2 {
+    font-size: 1em;
+  }
+}
