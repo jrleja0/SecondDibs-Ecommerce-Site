@@ -3,8 +3,10 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const PORT = process.env.PORT || 3002;
+const db = require('./db');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const store = new SequelizeStore({ db });
+const PORT = process.env.PORT || 3003;
 const app = express();
 module.exports = app;
 
@@ -18,7 +20,7 @@ const createApp = () => {
 
   app.use(session({
     secret: process.env.SESSION_SECRET || 'anImpossibleToGuessSecret',
-    store: new MongoStore({ url: 'mongodb://localhost:27017' }),
+    store,
     resave: false,
     saveUninitialized: false,
   }));
@@ -54,14 +56,13 @@ const createApp = () => {
   const server = app.listen(PORT, () => console.log(`Check it out on port ${PORT}`));
 };
 
-// const syncDb = () => db.sync();
+const syncDb = () => db.sync();
 
 // This evaluates as true when this file is run directly from the command line.
 // It will evaluate false when this module is required by another module, for example, if we wanted to require our app in a test spec.
 if (require.main === module) {
-  // syncDb()
-    // .then(createApp);
-  createApp();
+  syncDb()
+    .then(createApp);
 } else {
   createApp(app);
 }
