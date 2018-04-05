@@ -4,5 +4,6 @@ public/bundle.js
 public/bundle.js.map
 secrets.js
 .DS_Store
+.eslintrc.json
 npm-debug.log
 yarn-error.log
