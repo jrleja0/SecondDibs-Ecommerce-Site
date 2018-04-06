@@ -7,6 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 // import isEqual from 'lodash.isequal';
 import {fetchSearchKeywords, fetchSearchItems, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
+import {stylesBrowseSearch as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
@@ -20,7 +21,7 @@ class BrowseSearch extends React.Component {
       completedQuery: '',
       searching: false,
       completedFirstSearch: false,
-    }
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
   }
@@ -73,31 +74,8 @@ class BrowseSearch extends React.Component {
 
   render() {
 
-    const { items, searchKeywords, toggleFavorite } = this.props;
+    const { items, searchKeywordNames, toggleFavorite } = this.props;
     const { query, completedQuery, searching, completedFirstSearch } = this.state;
-
-    const styles = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        position: 'relative',
-      },
-      browseSearchInput: {
-        margin: 'auto',
-        border: '4px solid #c2a661',
-        padding: '20px',
-        width: '80%',
-        maxWidth: '500px',
-      },
-      browseIcon: {
-        color: '#222',
-        left: '-5px',
-        bottom: '-5px',
-        position: 'relative',
-      },
-    };
 
     return (
       <div>
@@ -111,7 +89,7 @@ class BrowseSearch extends React.Component {
             }
             openOnFocus={false}
             maxSearchResults={5}
-            dataSource={searchKeywords || []}
+            dataSource={searchKeywordNames || []}
             filter={this.filterInputSuggestions}
             onUpdateInput={this.handleInputChange}
             onNewRequest={this.handleInputSubmit}
@@ -175,16 +153,17 @@ class BrowseSearch extends React.Component {
 *////
 
 const mapState = state => ({
-  items: state.itemStore.searchItems,
-  searchKeywords: state.itemStore.searchKeywords,
+  items: state.searchStore.searchItems,
+  searchKeywords: state.searchStore.searchKeywords,
+  searchKeywordNames: state.searchStore.searchKeywordNames,
 });
 
 const mapDispatch = dispatch => ({
-  toggleFavorite: (favorite, id) => {
+  toggleFavorite: (favorite, key) => {
     if (favorite) {
-      dispatch(deleteFavorite(id));
+      dispatch(deleteFavorite(key));
     } else {
-      dispatch(addFavorite(id));
+      dispatch(addFavorite(key));
     }
   },
   handleFetchSearchKeywords: () => {

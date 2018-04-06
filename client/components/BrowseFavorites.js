@@ -5,6 +5,7 @@ import $ from 'jquery';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchFavorites, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
+import {stylesBrowseFavorites as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
@@ -21,7 +22,6 @@ class BrowseFavorites extends React.Component {
   }
 
   render() {
-
     const { items, toggleFavorite } = this.props;
 
     const toggleFavoriteOnFavorites = (favorite, id, evt) => {
@@ -32,16 +32,6 @@ class BrowseFavorites extends React.Component {
       tileContainer.css('order', toggleFlexOrder);
 
       toggleFavorite(favorite, id);
-    };
-
-    const styles = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        position: 'relative',
-      },
     };
 
     return (
@@ -75,15 +65,15 @@ class BrowseFavorites extends React.Component {
 *////
 
 const mapState = state => ({
-  items: state.itemStore.favoriteItems,
+  items: state.favoriteStore.favoriteItems,
 });
 
 const mapDispatch = dispatch => ({
-  toggleFavorite: (favorite, id) => {
+  toggleFavorite: (favorite, key) => {
     if (favorite) {
-      dispatch(deleteFavorite(id));
+      dispatch(deleteFavorite(key));
     } else {
-      dispatch(addFavorite(id));
+      dispatch(addFavorite(key));
     }
   },
   handleFetchFavorites: () => {

@@ -7,20 +7,20 @@ sessionRouter.get('/favorites', (req, res, next) => {
   res.status(200).json(req.session.favoriteItems);
 });
 
-sessionRouter.post('/addFavorite/:id', (req, res, next) => {
+sessionRouter.post('/addFavorite/:key', (req, res, next) => {
   if (!req.session.favoriteItems) req.session.favoriteItems = [];
-  req.session.favoriteItems.push(req.params.id);
-  res.status(201).json(req.params.id);
+  req.session.favoriteItems.push(req.params.key);
+  res.status(201).json(req.params.key);
 });
 
-sessionRouter.delete('/deleteFavorite/:id', (req, res, next) => {
+sessionRouter.delete('/deleteFavorite/:key', (req, res, next) => {
   if (req.session.favoriteItems) {
     req.session.favoriteItems =
-    req.session.favoriteItems.filter(id => {
-      return id !== req.params.id;
+    req.session.favoriteItems.filter(key => {
+      return key !== req.params.key;
     });
   }
-  res.status(204).json(req.params.id);
+  res.status(204).json(req.params.key);
 });
 
 module.exports = sessionRouter;

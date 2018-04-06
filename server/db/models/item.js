@@ -49,7 +49,7 @@ module.exports = Item;
 __Properties:__
 ((strings))
 _key
-_priceUSD  // or Integers
+_priceUSD  // or Integers?
 _sellerCompany
 _measurements
 _creators

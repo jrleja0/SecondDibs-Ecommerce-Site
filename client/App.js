@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <Switch>
-          <Route path="/item/:id" component={Item} />
+          <Route path="/item/:key" component={Item} />
           <BrowseContainer>
             <Switch>
               <Route path="/browse" exact component={Browse} />

@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchItems, fetchFavorites, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
+import {stylesBrowse as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
@@ -18,36 +19,7 @@ class Browse extends React.Component {
   }
 
   render() {
-
     const { items, totalItems, toggleFavorite, handleLoadMoreItems } = this.props;
-
-    const styles = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        position: 'relative',
-      },
-      loadMoreButton: {
-        color: '#c2a661',
-        border: '4px solid #c2a661',
-        borderRadius: 20,
-        height: 60,
-        width: 200,
-        margin: '20px auto',
-      },
-      loadMoreButtonDisabled: {
-        color: 'rgba(0, 0, 0, 0.4)',
-        border: '4px solid rgba(0, 0, 0, 0.2)',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        borderRadius: 20,
-        height: 60,
-        width: 200,
-        margin: '20px auto',
-      }
-    };
-
     return (
       <div>
         <ItemsGrid
@@ -99,11 +71,11 @@ const mapDispatch = dispatch => ({
   handleLoadMoreItems: start => {
     dispatch(fetchItems({start}));
   },
-  toggleFavorite: (favorite, id) => {
+  toggleFavorite: (favorite, key) => {
     if (favorite) {
-      dispatch(deleteFavorite(id));
+      dispatch(deleteFavorite(key));
     } else {
-      dispatch(addFavorite(id));
+      dispatch(addFavorite(key));
     }
   },
   handleFetchFavorites: () => {

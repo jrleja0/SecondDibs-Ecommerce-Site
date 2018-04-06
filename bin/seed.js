@@ -46,7 +46,7 @@ db.sync({force: true})
             return keywordInstance.addItems(itemsInstances);
           })
           .catch(err => {
-            console.log('error setting associations: keywords and items');
+            console.log('Error setting associations: keywords and items');
             console.error.bind(console)(err);
           });
       });

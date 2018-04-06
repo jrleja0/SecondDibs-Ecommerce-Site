@@ -1,26 +1,23 @@
-const express = require('express');
-const cachedItems = require('../data/items.json');
+const itemRouter = require('express').Router();
+const Item = require('../db/models/item');
 
-const itemRouter = express.Router();
-
-const getItem = function (itemId) {
-  return cachedItems.find(function (item) {
-    return item.id === itemId || item.integerId === itemId;
-  }) || {};
-};
-
-const addsFavoriteProp = function (item, favoriteItems) {
+const addsFavoriteProp = (item, favoriteItems) => {
   if (favoriteItems) {
-    item.favorite = favoriteItems.includes(item.id);
+    item.favorite = favoriteItems.includes(item.key);
   }
   return item;
 };
 
-itemRouter.get('/:id', (req, res) => {
-  const id = req.params.id;
-  let item = getItem(id);
-  item = addsFavoriteProp(item, req.session.favoriteItems);
-  res.status(200).json(item);
+itemRouter.get('/:key', (req, res, next) => {
+  Item.findOne({ where: {key: req.params.key} })
+    .then(item => {
+      return addsFavoriteProp(item, req.session.favoriteItems);
+    })
+    .then(item => {
+      res.json(item || {});
+      return null;
+    })
+    .catch(next);
 });
 
 module.exports = itemRouter;

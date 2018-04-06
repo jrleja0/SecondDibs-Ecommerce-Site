@@ -6,32 +6,16 @@ import FlatButton from 'material-ui/FlatButton';
 import HomeIcon from 'material-ui/svg-icons/action/home';
 import FavoriteIcon from 'material-ui/svg-icons/action/favorite';
 import SearchIcon from 'material-ui/svg-icons/action/search';
+import {stylesBrowseContainer as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
 *////
 const BrowseContainer = (props) => {
-
   const { children } = props;
-
-  const styles = {
-    toolbar: {
-      backgroundColor: '#222',
-      border: '2px solid #c2a661',
-      height: '75px',
-      padding: 0,
-      marginBottom: '20px',
-    },
-    flatButton: {
-      color: 'white',
-      height: '75px',
-      width: '100%',
-    },
-  };
-
   const handleScrollUp = () => {
     history.windowY = 0;
-  }
+  };
 
   return (
     <div>
@@ -103,6 +87,6 @@ const BrowseContainer = (props) => {
       {children}
     </div>
   );
-}
+};
 
 export default BrowseContainer;

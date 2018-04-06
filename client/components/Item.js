@@ -10,6 +10,7 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchItem, addFavorite, deleteFavorite} from '../store';
+import {stylesItem as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
@@ -18,43 +19,12 @@ class Item extends Component {
 
   componentDidMount() {
     const { loadItem, match } = this.props;
-    loadItem(match.params.id);
+    loadItem(match.params.key);
   }
 
   render() {
-
     const { item, match, toggleFavorite } = this.props;
-    const itemLoaded = item.id === match.params.id;
-
-    const styles = {
-      flatButton: {
-        color: '#c2a661',
-        border: '2px solid #c2a661',
-        flex: 1,
-        height: '50px',
-      },
-      navbarChevronLeft: {
-        width: '48px',
-        height: '48px',
-        margin: 0,
-      },
-      backButton: {
-        color: '#c2a661',
-        textDecoration: 'underline',
-        height: '90%',
-        width: '150px',
-      },
-      backButtonLabel: {
-        fontSize: '18px',
-        padding: 0,
-      },
-      titleStyle: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        color: '#222',
-      }
-    };
+    const itemLoaded = item.key === match.params.key;
 
     return (
       item ?
@@ -63,9 +33,9 @@ class Item extends Component {
           title={
             itemLoaded ?
             <img
-              src={(item.seller && 'https://a.1stdibscdn.com' + item.seller.logo)
-              || (item.seller && item.seller.company)}
-              alt={item.seller && item.seller.company}
+              src={(item.sellerLogo && 'https://a.1stdibscdn.com' + item.sellerLogo)
+              || (item.sellerCompany)}
+              alt={item.sellerCompany}
             />
             : null
           }
@@ -90,7 +60,7 @@ class Item extends Component {
                     break;
                   case '/browse/search':
                     history.push('/browse/search');
-                    break
+                    break;
                   default:
                     history.push('/browse');
                 }
@@ -118,7 +88,7 @@ class Item extends Component {
                           uncheckedIcon={<ActionFavoriteBorder />}
                           iconStyle={{fill: '#c2a661'}}
                           checked={item.favorite}
-                          onCheck={() => toggleFavorite(item.favorite, item.id)}
+                          onCheck={() => toggleFavorite(item.favorite, item.key)}
                         />
                       }
                     />
@@ -156,7 +126,7 @@ class Item extends Component {
                           <br />
                           <span
                             className="title-price"
-                          >{item.price ? item.price.amounts.USD : 'Price Upon Request'}
+                          >{item.priceUSD || 'Price Upon Request'}
                           </span>
                         </span>
                       }
@@ -168,7 +138,7 @@ class Item extends Component {
                       <span className="description-measurements">
                         <b>Measurements:</b>
                         <br />
-                        {item.measurements && item.measurements.display}
+                        {item.measurements}
                       </span>
                     </CardText>
                     <CardActions style={{display: 'flex'}}>
@@ -243,14 +213,14 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  loadItem: id => {
-    dispatch(fetchItem(id));
+  loadItem: key => {
+    dispatch(fetchItem(key));
   },
-  toggleFavorite: (favorite, id) => {
+  toggleFavorite: (favorite, key) => {
     if (favorite) {
-      dispatch(deleteFavorite(id));
+      dispatch(deleteFavorite(key));
     } else {
-      dispatch(addFavorite(id));
+      dispatch(addFavorite(key));
     }
   },
 });

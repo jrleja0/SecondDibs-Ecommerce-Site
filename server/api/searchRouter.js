@@ -1,75 +1,50 @@
-const express = require('express');
-const cachedItems = require('../data/items.json');
-const cacheKeywords = {};  /// key: keyword ; value: array of item IDs that contain keyword
+const searchRouter = require('express').Router();
+const Item = require('../db/models/item');
+const Keyword = require('../db/models/keyword');
+const Promise = require('bluebird');
 
-const searchRouter = express.Router();
-
-const saveKeywordsToCache = (keywordsArray, itemID) => {
-  keywordsArray.forEach(keyword => {
-    keyword = keyword.toLowerCase();
-    if (!cacheKeywords[keyword]) {
-      cacheKeywords[keyword] = [itemID];
-    } else {
-      cacheKeywords[keyword].push(itemID);
+const removeRepeatedItems = (itemsArray) => {
+  const itemKeyMap = {};
+  return itemsArray.reduce((itemsArr, nextItem) => {
+    if (!itemKeyMap[nextItem.key]) {
+      itemKeyMap[nextItem.key] = true;
+      return itemsArr.concat(nextItem);
     }
-  });
+    return itemsArr;
+  }, []);
 };
 
-const deleteUnwantedKeywords = () => {
-  delete cacheKeywords.and;
-  delete cacheKeywords.century;
-  delete cacheKeywords['mid-century'];
-  delete cacheKeywords.early;
-  delete cacheKeywords.i;
-  delete cacheKeywords.late;
-  delete cacheKeywords.of;
-  delete cacheKeywords.table;
-};
-
-const getAndCacheKeywords = (() => {
-  let cacheKeywordsArray = [];
-  return function() {
-    if (cacheKeywordsArray.length) return cacheKeywordsArray;
-    else {
-      cachedItems.map(item => {
-        // saveKeywordsToCache(item.title.split(' '), item.id);
-        saveKeywordsToCache([item.seller.company], item.id);
-        saveKeywordsToCache([item.creators], item.id);
-        saveKeywordsToCache(item.attributes.split(' '), item.id);
-        // saveKeywordsToCache(item.description.split(' '), item.id);
-      });
-      deleteUnwantedKeywords(cacheKeywords);
-      cacheKeywordsArray = Object.keys(cacheKeywords);
-      return cacheKeywordsArray;
-    }
-  };
-})();
-
-const searchMatchingItems = payload => {
-  const matchingItemsIDs = {};
-  payload.keywords.split(' ').forEach(keyword => {
-    if (cacheKeywords[keyword]) {
-      cacheKeywords[keyword].forEach(id => {
-        if (!matchingItemsIDs[id]) matchingItemsIDs[id] = id;
-      });
-    }
-    if (cacheKeywords[payload.keywords]) {
-      cacheKeywords[payload.keywords].forEach(id => {
-        if (!matchingItemsIDs[id]) matchingItemsIDs[id] = id;
-      });
-    }
-  });
-  return Object.keys(matchingItemsIDs);  // returns array of matching item IDs
-};
-
-searchRouter.get('', (req, res) => {
-    const response = searchMatchingItems(req.query);
-    res.status(200).json(response);
+searchRouter.get('', (req, res, next) => {
+  const keywords = req.query.keywords.split(' ').concat(req.query.keywords);
+  return Promise.map(keywords, keyword => {
+    return Keyword.findOne({
+      where: {name: keyword},
+      include: [{model: Item}],
+    });
+  })
+  .then(keywordInstances => {
+    const itemsArray = keywordInstances.reduce((itemsArr, nextKeyword) => {
+      if (nextKeyword && nextKeyword.items) {
+        return itemsArr.concat(nextKeyword.items);
+      }
+      return itemsArr;
+    }, []);
+    return removeRepeatedItems(itemsArray);
+  })
+  .then(itemsInstances => {
+    res.json(itemsInstances || []);
+    return null;
+  })
+  .catch(next);
 });
 
-searchRouter.get('/keywords', (req, res) => {
-  const response = getAndCacheKeywords();
-  res.status(200).json(response);
+searchRouter.get('/keywords', (req, res, next) => {
+  Keyword.findAll()
+    .then(keywords => {
+      res.json(keywords || []);
+      return null;
+    })
+    .catch(next);
 });
 
 module.exports = searchRouter;
