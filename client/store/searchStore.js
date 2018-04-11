@@ -14,19 +14,6 @@ const initState = {
   searchKeywords: [],
 };
 
-// ---------- DISPATCHERS ----------
-export const fetchSearchKeywords = () =>
-  dispatch =>
-    axios.get('/api/search/keywords')
-      .then(res => dispatch(loadSearchKeywords(res.data || [] )))
-      .catch(console.error.bind(console));
-
-export const fetchSearchItems = payload =>
-  dispatch =>
-    axios.get(`/api/search?keywords=${payload.searchKeywordsString}`)
-      .then(res => dispatch(loadSearchItems(res.data || [] )))
-      .catch(console.error.bind(console));
-
 // ---------- REDUCER ----------
 export default function (state = initState, action) {
   const newState = Object.assign({}, state );
@@ -45,3 +32,16 @@ export default function (state = initState, action) {
   }
   return newState;
 }
+
+// ---------- DISPATCHERS ----------
+export const fetchSearchKeywords = () =>
+  dispatch =>
+    axios.get('/api/search/keywords')
+      .then(res => dispatch(loadSearchKeywords(res.data || [] )))
+      .catch(console.error.bind(console));
+
+export const fetchSearchItems = payload =>
+  dispatch =>
+    axios.get(`/api/search?keywords=${payload.searchKeywordsString}`)
+      .then(res => dispatch(loadSearchItems(res.data || [] )))
+      .catch(console.error.bind(console));

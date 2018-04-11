@@ -14,6 +14,7 @@ const removeRepeatedItems = (itemsArray) => {
   }, []);
 };
 
+// get items that match search query keywords //
 searchRouter.get('', (req, res, next) => {
   const keywords = req.query.keywords.split(' ').concat(req.query.keywords);
   return Promise.map(keywords, keyword => {
@@ -32,16 +33,17 @@ searchRouter.get('', (req, res, next) => {
     return removeRepeatedItems(itemsArray);
   })
   .then(itemsInstances => {
-    res.json(itemsInstances || []);
+    res.status(200).json(itemsInstances || []);
     return null;
   })
   .catch(next);
 });
 
+// get keywords (for form auto-suggestions) //
 searchRouter.get('/keywords', (req, res, next) => {
   Keyword.findAll()
     .then(keywords => {
-      res.json(keywords || []);
+      res.status(200).json(keywords || []);
       return null;
     })
     .catch(next);

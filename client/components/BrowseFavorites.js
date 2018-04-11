@@ -22,22 +22,23 @@ class BrowseFavorites extends React.Component {
   }
 
   render() {
-    const { items, toggleFavorite } = this.props;
+    const { items, favoriteKeys, toggleFavorite } = this.props;
 
-    const toggleFavoriteOnFavorites = (favorite, id, evt) => {
+    const toggleFavoriteOnFavorites = (favorite, itemKey, evt) => {
       const tileContainer = $(evt.target).closest('.tile-container');
       const toggleOpacity = favorite ? 0.3 : 1;
       const toggleFlexOrder = favorite ? 1 : 0;
       tileContainer.css('opacity', toggleOpacity);
       tileContainer.css('order', toggleFlexOrder);
 
-      toggleFavorite(favorite, id);
+      toggleFavorite(favorite, itemKey);
     };
 
     return (
       <div>
         <ItemsGrid
           items={items}
+          favoriteKeys={favoriteKeys}
           toggleFavorite={toggleFavoriteOnFavorites}
         />
         <div style={styles.root}>
@@ -66,18 +67,19 @@ class BrowseFavorites extends React.Component {
 
 const mapState = state => ({
   items: state.favoriteStore.favoriteItems,
+  favoriteKeys: state.favoriteStore.favoriteItemKeys,
 });
 
 const mapDispatch = dispatch => ({
-  toggleFavorite: (favorite, key) => {
-    if (favorite) {
-      dispatch(deleteFavorite(key));
-    } else {
-      dispatch(addFavorite(key));
-    }
-  },
   handleFetchFavorites: () => {
     dispatch(fetchFavorites());
+  },
+  toggleFavorite: (favorite, itemKey) => {
+    if (favorite) {
+      dispatch(deleteFavorite(itemKey));
+    } else {
+      dispatch(addFavorite(itemKey));
+    }
   },
 });
 

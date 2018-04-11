@@ -23,7 +23,7 @@ class Item extends Component {
   }
 
   render() {
-    const { item, match, toggleFavorite } = this.props;
+    const { item, match, favoriteKeys, toggleFavorite } = this.props;
     const itemLoaded = item.key === match.params.key;
 
     return (
@@ -87,8 +87,8 @@ class Item extends Component {
                           checkedIcon={<ActionFavorite />}
                           uncheckedIcon={<ActionFavoriteBorder />}
                           iconStyle={{fill: '#c2a661'}}
-                          checked={item.favorite}
-                          onCheck={() => toggleFavorite(item.favorite, item.key)}
+                          checked={favoriteKeys[item.key]}
+                          onCheck={() => toggleFavorite(favoriteKeys[item.key], item.key)}
                         />
                       }
                     />
@@ -210,17 +210,18 @@ class Item extends Component {
 *////
 const mapState = state => ({
   item: state.itemStore.item,
+  favoriteKeys: state.favoriteStore.favoriteItemKeys,
 });
 
 const mapDispatch = dispatch => ({
   loadItem: key => {
     dispatch(fetchItem(key));
   },
-  toggleFavorite: (favorite, key) => {
+  toggleFavorite: (favorite, itemKey) => {
     if (favorite) {
-      dispatch(deleteFavorite(key));
+      dispatch(deleteFavorite(itemKey));
     } else {
-      dispatch(addFavorite(key));
+      dispatch(addFavorite(itemKey));
     }
   },
 });

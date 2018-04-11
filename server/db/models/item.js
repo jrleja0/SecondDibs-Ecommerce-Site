@@ -40,7 +40,15 @@ const Item = db.define('item', {
   creators: {
     type: Sequelize.STRING,
     default: null,
-  },
+  }
+}, {
+  scopes: {
+    favoriteItems(userId) {
+      return {
+        where: {usersFavorite: userId}
+      };
+    }
+  }
 });
 
 module.exports = Item;

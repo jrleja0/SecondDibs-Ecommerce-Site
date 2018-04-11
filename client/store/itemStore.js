@@ -15,19 +15,6 @@ const initState = {
   item: {},
 };
 
-// ---------- DISPATCHERS ----------
-export const fetchItems = payload =>
-  dispatch =>
-    axios.get(`/api/browse?start=${payload.start}`)
-      .then(res => dispatch(loadItems(res.data || {} )))
-      .catch(console.error.bind(console));
-
-export const fetchItem = key =>
-  dispatch =>
-    axios.get(`/api/item/${key}`)
-      .then(res => dispatch(getItem(res.data || {} )))
-      .catch(console.error.bind(console));
-
 // ---------- REDUCER ----------
 export default function (state = initState, action) {
   const newState = Object.assign({}, state );
@@ -50,3 +37,16 @@ export default function (state = initState, action) {
   }
   return newState;
 }
+
+// ---------- DISPATCHERS ----------
+export const fetchItems = payload =>
+  dispatch =>
+    axios.get(`/api/browse?start=${payload.start}`)
+      .then(res => dispatch(loadItems(res.data || {} )))
+      .catch(console.error.bind(console));
+
+export const fetchItem = key =>
+  dispatch =>
+    axios.get(`/api/item/${key}`)
+      .then(res => dispatch(getItem(res.data || {} )))
+      .catch(console.error.bind(console));

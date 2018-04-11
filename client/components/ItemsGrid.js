@@ -11,7 +11,7 @@ import {stylesItemsGrid as styles} from '../styling/inlineStyles';
  COMPONENT
 *////
 const ItemsGrid = (props) => {
-  const {items, toggleFavorite} = props;
+  const {items, favoriteKeys, toggleFavorite} = props;
 
   return (
     <div className="items-grid" style={styles.root}>
@@ -27,8 +27,8 @@ const ItemsGrid = (props) => {
                   checkedIcon={<ActionFavorite />}
                   uncheckedIcon={<ActionFavoriteBorder />}
                   iconStyle={{fill: '#c2a661'}}
-                  checked={item.favorite}
-                  onCheck={(evt) => {toggleFavorite(item.favorite, item.key, evt);}}
+                  checked={favoriteKeys[item.key]}
+                  onCheck={(evt) => {toggleFavorite(favoriteKeys[item.key], item.key, evt);}}
                 />
               }
             >

@@ -3,12 +3,20 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const db = require('./db');
+const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const db = require('./db');
 const store = new SequelizeStore({ db });
 const PORT = process.env.PORT || 3003;
 const app = express();
 module.exports = app;
+
+// passport registration
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser((id, done) =>
+  db.models.user.findById(id)
+    .then(user => (done(null, user)))
+    .catch(done));
 
 const createApp = () => {
   // logging middleware
@@ -18,14 +26,18 @@ const createApp = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
+  // session middleware with passport
   app.use(session({
     secret: process.env.SESSION_SECRET || 'anImpossibleToGuessSecret',
     store,
     resave: false,
     saveUninitialized: false,
   }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-  // api routes
+  // auth and api routes
+  app.use('/auth', require('./auth'));
   app.use('/api', require('./api'));
 
   // static file-serving middleware

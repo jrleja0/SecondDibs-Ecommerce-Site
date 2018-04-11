@@ -74,7 +74,7 @@ class BrowseSearch extends React.Component {
 
   render() {
 
-    const { items, searchKeywordNames, toggleFavorite } = this.props;
+    const { items, favoriteKeys, searchKeywordNames, toggleFavorite } = this.props;
     const { query, completedQuery, searching, completedFirstSearch } = this.state;
 
     return (
@@ -116,6 +116,7 @@ class BrowseSearch extends React.Component {
         </div>
         <ItemsGrid
           items={items}
+          favoriteKeys={favoriteKeys}
           toggleFavorite={toggleFavorite}
         />
         <div style={styles.root}>
@@ -154,23 +155,24 @@ class BrowseSearch extends React.Component {
 
 const mapState = state => ({
   items: state.searchStore.searchItems,
+  favoriteKeys: state.favoriteStore.favoriteItemKeys,
   searchKeywords: state.searchStore.searchKeywords,
   searchKeywordNames: state.searchStore.searchKeywordNames,
 });
 
 const mapDispatch = dispatch => ({
-  toggleFavorite: (favorite, key) => {
-    if (favorite) {
-      dispatch(deleteFavorite(key));
-    } else {
-      dispatch(addFavorite(key));
-    }
-  },
   handleFetchSearchKeywords: () => {
     dispatch(fetchSearchKeywords());
   },
   handleFetchSearchItems: (searchKeywordsString) => {
     dispatch(fetchSearchItems({searchKeywordsString}));
+  },
+  toggleFavorite: (favorite, itemKey) => {
+    if (favorite) {
+      dispatch(deleteFavorite(itemKey));
+    } else {
+      dispatch(addFavorite(itemKey));
+    }
   },
 });
 

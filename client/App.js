@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {Browse, BrowseFavorites, BrowseSearch, BrowseContainer, Item} from './components';
-import {fetchItems} from './store';
+import {fetchItems, fetchFavorites} from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 /*///
@@ -39,9 +39,11 @@ class App extends Component {
 const mapState = null;
 
 const mapDispatch = dispatch => ({
-  loadInitialData: () => {
-    dispatch(fetchItems({start: 0}));
-  },
+  loadInitialData: () =>
+    Promise.all([
+      dispatch(fetchItems({start: 0})),
+      dispatch(fetchFavorites())
+    ]),
 });
 
 export default withRouter(connect(mapState, mapDispatch)(App));

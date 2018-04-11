@@ -3,7 +3,7 @@ import history from '../history';
 import {connect} from 'react-redux';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import {fetchItems, fetchFavorites, addFavorite, deleteFavorite} from '../store';
+import {fetchItems, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
 import {stylesBrowse as styles} from '../styling/inlineStyles';
 
@@ -19,11 +19,12 @@ class Browse extends React.Component {
   }
 
   render() {
-    const { items, totalItems, toggleFavorite, handleLoadMoreItems } = this.props;
+    const { items, totalItems, favoriteKeys, handleLoadMoreItems, toggleFavorite } = this.props;
     return (
       <div>
         <ItemsGrid
           items={items}
+          favoriteKeys={favoriteKeys}
           toggleFavorite={toggleFavorite}
         />
         <div style={styles.root}>
@@ -65,21 +66,19 @@ class Browse extends React.Component {
 const mapState = state => ({
   items: state.itemStore.items,
   totalItems: state.itemStore.totalItems,
+  favoriteKeys: state.favoriteStore.favoriteItemKeys,
 });
 
 const mapDispatch = dispatch => ({
   handleLoadMoreItems: start => {
     dispatch(fetchItems({start}));
   },
-  toggleFavorite: (favorite, key) => {
+  toggleFavorite: (favorite, itemKey) => {
     if (favorite) {
-      dispatch(deleteFavorite(key));
+      dispatch(deleteFavorite(itemKey));
     } else {
-      dispatch(addFavorite(key));
+      dispatch(addFavorite(itemKey));
     }
-  },
-  handleFetchFavorites: () => {
-    dispatch(fetchFavorites());
   },
 });
 
