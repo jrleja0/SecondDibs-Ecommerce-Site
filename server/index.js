@@ -15,7 +15,7 @@ module.exports = app;
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser((id, done) =>
   db.models.user.findById(id)
-    .then(user => (done(null, user)))
+    .then(user => done(null, user))
     .catch(done));
 
 const createApp = () => {

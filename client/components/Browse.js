@@ -1,7 +1,7 @@
 import React from 'react';
 import history from '../history';
 import {connect} from 'react-redux';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
+import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchItems, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
@@ -30,7 +30,9 @@ class Browse extends React.Component {
         <div style={styles.root}>
         { items && items.length ?
           <FlatButton
-            className="button-load-more"
+            className={items && items.length !== totalItems ?
+              'button-load-more' : 'button-disabled'
+            }
             label="Load More"
             hoverColor="#c2a661"
             rippleColor="yellow"

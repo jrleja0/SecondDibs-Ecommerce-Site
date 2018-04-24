@@ -11,7 +11,7 @@ User.hasMany(Order);
 Order.belongsToMany(Item, { through: 'order_item', onDelete: 'CASCADE' });
 Item.belongsToMany(Order, { through: 'order_item' });
 // Users and (Favorite) Items -- many to many relationship -- join table: user_favorite_item //
-User.belongsToMany(Item, { as: 'favorite', through: 'user_favorite_item' });
+User.belongsToMany(Item, { as: 'favorites', through: 'user_favorite_item' });
 Item.belongsToMany(User, { as: 'usersFavorite', through: 'user_favorite_item' });
 // Keywords and Items -- many to many relationship -- join table: keyword_item //
 Keyword.belongsToMany(Item, { through: 'keyword_item' });

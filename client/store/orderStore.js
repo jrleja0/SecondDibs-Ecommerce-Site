@@ -20,7 +20,7 @@ const submitOrder = orderId => ({ type: SUBMIT_ORDER, orderId });
 // ---------- INIT STATE ----------
 const initState = {
   current: {},
-  history: {},
+  history: [],
 };
 
 // ---------- REDUCER ----------
@@ -32,11 +32,7 @@ export default function (state = initState, action) {
       return newState;
 
     case GET_CURRENT_ORDER:
-      if (action.order.cart) {
-        newState.current = action.order.cart;
-      } else {
-        newState.current = action.order;
-      }
+      newState.current = action.order;
       return newState;
 
     case ADD_ITEM_AND_FIND_OR_CREATE_ORDER:
@@ -61,9 +57,9 @@ export default function (state = initState, action) {
 }
 
 // ---------- DISPATCHERS ----------
-export const fetchOrderHistory = userId =>
+export const fetchOrderHistory = () =>
   dispatch =>
-    axios.get(`api/order/user/${userId}/history`)
+    axios.get('/api/order/user/history')
       .then(res =>
         dispatch(getOrderHistory(res.data)))
       .catch(err => console.error('Fetching order history unsuccessful', err));
@@ -80,9 +76,9 @@ export const fetchCurrentOrder = () =>
       })
       .catch(err => console.error('Fetching current order unsuccessful', err));
 
-export const addItem = (itemId, userId) =>
+export const addItem = (itemId, userId, orderId) =>
   dispatch =>
-    axios.post(`/api/order/item/${itemId}`, {userId})
+    axios.post(`/api/order/item/${itemId}`, {userId, orderId})
       .then(res =>
         dispatch(addItemToFoundOrCreatedOrder(res.data)))
       .then(() =>
@@ -103,11 +99,14 @@ export const updateDeleteOrder = orderId =>
         dispatch(deleteOrder(res.data)))
       .catch(err => console.error('Deleting cart unsuccessful', err));
 
-export const updateSubmitOrder = (orderId, userId) =>
+export const updateSubmitOrder = (orderId, token) =>
   dispatch =>
-    axios.put(`/api/order/cart/${orderId}/${userId}`)
+    axios.put(`/api/order/cart/${orderId}`, {token})
       .then(res =>
         dispatch(submitOrder(res.data)))
       .then(() =>
-        history.push('/success'))
-      .catch(err => console.error('Submitting order unsuccessful', err));
+        history.push('/order/success'))
+      .catch(err => {
+        console.error('Submitting order unsuccessful', err);
+        return history.push('order/unsuccessful');
+      });

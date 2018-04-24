@@ -24,6 +24,7 @@ class BrowseSearch extends React.Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
+    this.filterInputSuggestions = this.filterInputSuggestions.bind(this);
   }
 
   componentDidMount() {
@@ -99,6 +100,8 @@ class BrowseSearch extends React.Component {
             floatingLabelStyle={{color: '#222'}}
             textFieldStyle={{width: '100%'}}
             menuStyle={{backgroundColor: '#f6f3eb'}}
+            underlineStyle={{borderColor: '#222'}}
+            underlineFocusStyle={{borderColor: '#c2a661'}}
           />
         </div>
         <div style={styles.root}>

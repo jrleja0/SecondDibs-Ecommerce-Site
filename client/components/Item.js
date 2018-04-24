@@ -1,21 +1,20 @@
-import React, {Component} from 'react';
-import history from '../history';
+import React from 'react';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import CircularProgress from 'material-ui/CircularProgress';
-import {fetchItem, addFavorite, deleteFavorite} from '../store';
+import {fetchItem, addFavorite, deleteFavorite, addItem} from '../store';
+import {BackToBrowseButton} from './index';
 import {stylesItem as styles} from '../styling/inlineStyles';
 
 /*///
  COMPONENT
 *////
-class Item extends Component {
+class Item extends React.Component {
 
   componentDidMount() {
     const { loadItem, match } = this.props;
@@ -23,8 +22,29 @@ class Item extends Component {
   }
 
   render() {
-    const { item, match, favoriteKeys, toggleFavorite } = this.props;
-    const itemLoaded = item.key === match.params.key;
+    const { item, match, favoriteKeys, toggleFavorite, itemsInCart, addItemToCart } = this.props;
+    const itemLoaded = (item.key === match.params.key);
+    const itemInCart = itemsInCart && !!itemsInCart.find((cartItem => cartItem.key === item.key));
+    const itemPrice = (item) => {
+      const price = item.formattedPrice || 'Price Upon Request';
+      return item.sold ? `${price} - SOLD` : price;
+    };
+    const addToCartButtonClassName = (function() {
+      if (itemInCart) {
+        return 'item-in-cart-button';
+      } else if (item.sold || !item.formattedPrice) {
+        return 'item-action-button-disabled';
+      } else {
+        return 'item-action-button';
+      }
+    }());
+    const makeOfferButtonClassName = (function() {
+      if (itemInCart || item.sold) {
+        return 'item-action-button-disabled';
+      } else {
+        return 'item-action-button';
+      }
+    }());
 
     return (
       item ?
@@ -39,34 +59,7 @@ class Item extends Component {
             />
             : null
           }
-          iconElementLeft={
-            <FlatButton
-              label="Browse"
-              secondary={true}
-              icon={
-                <NavigationChevronLeft
-                  style={styles.navbarChevronLeft}
-                />
-              }
-              style={styles.backButton}
-              labelStyle={styles.backButtonLabel}
-              className="button-back-to-browse"
-              hoverColor="#c2a661"
-              rippleColor="yellow"
-              onClick={() => {
-                switch (history.previousPathname) {
-                  case '/browse/favorites':
-                    history.push('/browse/favorites');
-                    break;
-                  case '/browse/search':
-                    history.push('/browse/search');
-                    break;
-                  default:
-                    history.push('/browse');
-                }
-              }}
-            />
-          }
+          iconElementLeft={<BackToBrowseButton />}
           style={{backgroundColor: 'white'}}
           titleStyle={styles.titleStyle}
           className="item-navbar"
@@ -125,8 +118,8 @@ class Item extends Component {
                           {item.title}
                           <br />
                           <span
-                            className="title-price"
-                          >{item.priceUSD || 'Price Upon Request'}
+                            className={item.sold ? 'title-price-sold' : 'title-price'}
+                          >{itemPrice(item)}
                           </span>
                         </span>
                       }
@@ -142,22 +135,26 @@ class Item extends Component {
                       </span>
                     </CardText>
                     <CardActions style={{display: 'flex'}}>
-                      <FlatButton
-                        label="Purchase"
-                        style={styles.flatButton}
-                        onClick={() => alert('You selected "Purchase".')}
-                        className="button-purchase"
-                        hoverColor="#c2a661"
-                        rippleColor="yellow"
-                      />
-                      <FlatButton
-                        label="Make Offer"
-                        style={styles.flatButton}
-                        onClick={() => alert('You selected "Make Offer".')}
-                        className="button-make-offer"
-                        hoverColor="#c2a661"
-                        rippleColor="yellow"
-                      />
+                      <div className={addToCartButtonClassName + '-container'}>
+                        <FlatButton
+                          label={itemInCart ? 'Item Added To Cart' : 'Add To Cart'}
+                          onClick={() => addItemToCart(item.id)}
+                          style={styles.flatButton}
+                          className={addToCartButtonClassName}
+                          rippleColor="yellow"
+                          disabled={itemInCart || !item.formattedPrice || item.sold}
+                        />
+                      </div>
+                      <div className={makeOfferButtonClassName + '-container'}>
+                        <FlatButton
+                          label="Make Offer"
+                          onClick={() => alert('Thanks for your interest. We regret this service is not yet available. Please check back soon.')}
+                          style={styles.flatButton}
+                          className={makeOfferButtonClassName}
+                          rippleColor="yellow"
+                          disabled={itemInCart || item.sold}
+                        />
+                      </div>
                     </CardActions>
                   </div>
                   : <div
@@ -211,11 +208,12 @@ class Item extends Component {
 const mapState = state => ({
   item: state.itemStore.item,
   favoriteKeys: state.favoriteStore.favoriteItemKeys,
+  itemsInCart: state.orderStore.current.items,
 });
 
 const mapDispatch = dispatch => ({
-  loadItem: key => {
-    dispatch(fetchItem(key));
+  loadItem: itemKey => {
+    dispatch(fetchItem(itemKey));
   },
   toggleFavorite: (favorite, itemKey) => {
     if (favorite) {
@@ -223,6 +221,9 @@ const mapDispatch = dispatch => ({
     } else {
       dispatch(addFavorite(itemKey));
     }
+  },
+  addItemToCart: itemKey => {
+    dispatch(addItem(itemKey));
   },
 });
 

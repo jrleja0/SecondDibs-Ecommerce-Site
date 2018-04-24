@@ -3,29 +3,94 @@
 ///////
 
 ///////
+/* MainNavContainer CSS */
+///////
+
+.main-nav-toolbar {
+  padding: 0 24px;
+}
+
+.nav-buttons-large-viewport {
+  display: flex;
+}
+.nav-button-small-viewport {
+  display: none;
+}
+.titlebar-logo-large {
+  display: block;
+}
+.titlebar-logo-small {
+  display: none;
+}
+
+.main-nav-button {
+  @extend .button-basic-gold;
+}
+.main-nav-menu-icon-button {
+  @extend .button-basic-gold;
+  margin: 10px;
+}
+
+.cart-button-active {
+  background-color: $gold-rgba4;
+}
+
+.drawer-menu-container {
+  h3 {
+    color: $gold;
+    padding-left: 20px;
+  }
+}
+
+.drawer-menu-item {
+  color: white;
+}
+.drawer-menu-item:hover {
+  color: $gold;
+}
+.drawer-menu-item-active {
+  span {
+    border: 1px solid $gold;
+  }
+}
+
+.logged-in-icon {
+  fill: 'black',
+}
+.logged-in-icon-active {
+  fill: $gold;
+}
+
+///////
+/* Login and Signup CSS */
+///////
+
+.auth-form-button {
+  @extend .button-basic-gold;
+}
+
+///////
 /* Browse Page CSS */
 ///////
 
-.titlebar-browse {
-  display: flex;
-  align-items: center;
-  height: 60px;
-  background-color: #222;
-}
-.titlebar-browse h1 {
-  margin: auto;
-  color: #f6f3eb;
-}
-.titlebar-browse h2 {
-  position: absolute;
-  margin: auto 10px;
+.titlebar-logo a {
   color: black;
+  text-decoration: none;
   background-color: #c2a661;
   border: 1px solid white;
+  padding: 5px;
+}
+.titlebar-logo a:hover {
+  color: #c2a661;
+  background-color: black;
 }
 
-.button-route-browse:hover span, .button-route-favorites:hover span, .button-route-search:hover span {
-  color: #c2a661;
+.browse-route-link:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.button-route-browse, .button-route-favorites, .button-route-search {
+  @extend .button-basic-gold;
 }
 
 @-webkit-keyframes add-button-active-route {
@@ -111,8 +176,8 @@
   left: 0;
 }
 
-.button-load-more:hover span {
-  color: white;
+.button-load-more {
+  @extend .button-basic;
 }
 
 ///////
@@ -157,8 +222,12 @@
   color: #776868;
 }
 
-.button-purchase:hover span, .button-make-offer:hover span, .button-back-to-browse:hover span {
-  color: white;
+.title-price-sold {
+  color: red;
+}
+
+.item-action-button, .button-back-to-browse {
+  @extend .button-basic;
 }
 
 @-webkit-keyframes move-back-to-browse-arrow {
@@ -186,4 +255,104 @@
   position: relative;
   -webkit-animation: 3s infinite move-back-to-browse-arrow;
   animation: 3s infinite move-back-to-browse-arrow;
+}
+
+.button-back-to-browse {
+  width: 150px;
+}
+.button-back-to-browse-large {
+  display: inline-block;
+}
+.button-back-to-browse-small {
+  display: none;
+}
+
+.item-action-button {
+  @extend .basic-flat-button;
+  color: $gold;
+  width: 100%;
+}
+.item-action-button-container {
+  flex: 1;
+}
+.item-action-button-container:hover {
+  background-color: $gold;
+}
+.item-in-cart-button {
+  @extend .basic-flat-button;
+  background-color: $gold;
+  cursor: default;
+  width: 100%;
+}
+.item-in-cart-button-container {
+  background-color: $gold;
+  flex: 1;
+}
+.item-action-button-disabled {
+  @extend .basic-flat-button;
+  color: rgba(0, 0, 0, 0.4);
+  border: 4px solid rgba(0, 0, 0, 0.2);
+  cursor: default;
+  width: 100%;
+}
+.item-action-button-disabled-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  flex: 1;
+}
+
+///////
+/* Cart Page CSS */
+///////
+
+.cart-actions-button {
+  @extend .button-basic-gold;
+}
+.remove-item-button {
+  fill: '#222',
+}
+.remove-item-button:hover, {
+  fill: $gold;
+}
+
+.placeholder-message {
+  @extend .basic-subheader;
+}
+
+.cart-table {
+  th, td {
+    padding: 0 24px;
+  }
+}
+
+.cart-item-header-large {
+  display: block;
+}
+.cart-item-header-small {
+  display: none;
+}
+
+.item-image-column {
+  width: 150px;
+}
+.item-name-column {
+  display: table-cell;
+}
+.item-price-column {
+  width: 150px;
+}
+.remove-item-column {
+  width: 90px;
+}
+
+///////
+/* Order Confirmation Page CSS */
+///////
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border-top: 2px solid $gold;
+  border-bottom: 2px solid $gold;
+  padding: 5px;
 }

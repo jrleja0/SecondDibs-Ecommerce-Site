@@ -34,23 +34,25 @@ export const me = () =>
       .then(res => dispatch(getUser(res.data || initState)))
       .catch(console.error.bind(console));
 
-export const auth = (email, password, method) =>
+export const auth = (method, email, password, name) =>
   dispatch =>
-    axios.post(`/auth/${method}`, { email, password })
-      .then(res => {
-        dispatch(getUser(res.data));
+    axios.post(`/auth/${method}`, { email, password, name })
+      .then(res =>
+        dispatch(getUser(res.data)))
+      .then((user) => {
         history.push('/browse');
+        return user;
       })
       .catch(error =>
-        dispatch(getUser({error})));
+        dispatch(getUser({ error })));
 
-export const logout = () =>
+export const logOut = () =>
   dispatch =>
     axios.post('/auth/logout')
-      .then(() => {
-        dispatch(removeUser());
-        history.push('/browse');
-      })
+      .then(() =>
+        dispatch(removeUser()))
+      .then(() =>
+        history.push('/browse'))
       .catch(console.error.bind(console));
 
 export const fetchUser = user =>

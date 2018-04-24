@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import history from '../history';
+import {Link} from 'react-router-dom';
 import {GridTile} from 'material-ui/GridList';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
@@ -12,6 +12,10 @@ import {stylesItemsGrid as styles} from '../styling/inlineStyles';
 *////
 const ItemsGrid = (props) => {
   const {items, favoriteKeys, toggleFavorite} = props;
+  const itemPrice = (item) => {
+    const price = item.formattedPrice || 'Price Upon Request';
+    return item.sold ? `${price} - SOLD` : price;
+  };
 
   return (
     <div className="items-grid" style={styles.root}>
@@ -20,7 +24,8 @@ const ItemsGrid = (props) => {
         items.map(item => (
           <div className="tile-container" key={item.key}>
             <GridTile
-              title={item.priceUSD || 'Price Upon Request'}
+              title={itemPrice(item)}
+              titleStyle={item.sold ? {color: 'red'} : {}}
               subtitle={item.title}
               actionIcon={
                 <Checkbox

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const {priceFormatterDollarsNoCents, priceFormatterDollarsAndCents} = require('../currencyConverter');
 
 const Item = db.define('item', {
   key: {
@@ -14,8 +15,16 @@ const Item = db.define('item', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  priceUSD: {
-    type: Sequelize.STRING,
+  priceUSD: {   // stores USD value as cents
+    type: Sequelize.INTEGER,
+    get() {
+      return this.getDataValue('priceUSD') / 100;
+    },
+    set(price) {
+      return price ?
+        this.setDataValue('priceUSD', price * 100)
+        : null;
+    },
   },
   sold: {
     type: Sequelize.BOOLEAN,
@@ -48,7 +57,19 @@ const Item = db.define('item', {
         where: {usersFavorite: userId}
       };
     }
-  }
+  },
+  getterMethods: {
+    formattedPrice() {
+      return this.priceUSD ?
+        priceFormatterDollarsNoCents.format(this.priceUSD)
+        : null;
+    },
+    formattedPriceWithCents() {
+      return this.priceUSD ?
+        priceFormatterDollarsAndCents.format(this.priceUSD)
+        : null;
+    },
+  },
 });
 
 module.exports = Item;
@@ -57,7 +78,6 @@ module.exports = Item;
 __Properties:__
 ((strings))
 _key
-_priceUSD  // or Integers?
 _sellerCompany
 _measurements
 _creators
@@ -67,6 +87,9 @@ _title
 _image
 _sellerLogo
 _description
+
+((integers))
+_priceUSD
 
 ((booleans))
 _sold

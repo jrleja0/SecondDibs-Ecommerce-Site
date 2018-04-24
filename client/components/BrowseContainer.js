@@ -19,10 +19,6 @@ const BrowseContainer = (props) => {
 
   return (
     <div>
-      <div className="titlebar-browse">
-        <h2>{'< SecondDibs >'}</h2>
-        <h1>Browse Items</h1>
-      </div>
       <div>
         <Toolbar
           style={styles.toolbar}
@@ -32,6 +28,7 @@ const BrowseContainer = (props) => {
           >
             <NavLink to="/browse"
               exact={true}
+              className="browse-route-link"
               activeClassName="button-active-route"
               style={{flex: 1}}
               onClick={handleScrollUp}
@@ -49,6 +46,7 @@ const BrowseContainer = (props) => {
             </NavLink>
             <span style={{borderLeft: '2px solid #c2a661', height: '100%'}} />
             <NavLink to="/browse/favorites"
+              className="browse-route-link"
               activeClassName="button-active-route"
               style={{flex: 1}}
               onClick={handleScrollUp}
@@ -66,6 +64,7 @@ const BrowseContainer = (props) => {
             </NavLink>
             <span style={{borderLeft: '2px solid #c2a661', height: '100%'}} />
             <NavLink to="/browse/search"
+              className="browse-route-link"
               activeClassName="button-active-route"
               style={{flex: 1}}
               onClick={handleScrollUp}
