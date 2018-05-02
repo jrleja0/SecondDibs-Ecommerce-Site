@@ -1,7 +1,7 @@
 {
-  "name": "second-dibs-luxury-goods-ecommerce-browsing-and-shopping-app",
+  "name": "seconddibs-ecommerce-site",
   "version": "1.0.0",
-  "description": "Ecommerce prototype, inspired by 1stdibs.com",
+  "description": "ecommerce site inspired by 1stdibs.com",
   "main": "index.js",
   "scripts": {
     "start": "node server",
@@ -9,7 +9,7 @@
     "start-server": "nodemon server",
     "build-client": "webpack",
     "seed": "node bin/seed.js",
-    "test": "NODE_ENV=development mocha ./test/**/*.spec.js --compilers js:babel-register"
+    "test": "DATABASE_URL='postgres://localhost:5432/2ndDibsEcommerce-Test' NODE_ENV=development mocha ./test/**/*.spec.js --compilers js:babel-register"
   },
   "author": "Jasiu Leja <jrleja.design@gmail.com>",
   "license": "MIT",
