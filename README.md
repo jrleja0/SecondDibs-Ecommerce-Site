@@ -17,7 +17,7 @@ Technologies used: JavaScript - React, Redux; Node, Express, PostgreSQL | Sequel
 
 Feel free to sign up with your own test account.
 Or log in and test purchasing items using this account:
-
+```
 test@test.com  |  email
 test1  |  password
 
@@ -29,6 +29,7 @@ Testville  |  city
 4242 4242 4242 4242  |  credit card
 12 / 20  |  expiration date
 111  |  security code
+```
 
 For more info on using Stripe in test mode:
 https://stripe.com/docs/testing#cards
