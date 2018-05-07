@@ -1,5 +1,8 @@
 module.exports = {
-  entry: './client/index.js',
+  entry: [
+    'babel-polyfill',
+    './client/index.js'
+  ],
   output: {
     path: __dirname,
     filename: './public/bundle.js'

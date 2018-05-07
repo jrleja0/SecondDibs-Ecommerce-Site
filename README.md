@@ -13,7 +13,27 @@ https://github.com/1stdibs/front-end-quiz/tree/master/react
 
 Technologies used: JavaScript - React, Redux; Node, Express, PostgreSQL | Sequelize, Express-Session & Passport.js for authentication; HTML, SCSS, Material-UI
 
-## To start from codebase
+## To Log In
+
+Feel free to sign up with your own test account.
+Or log in and test purchasing items using this account:
+
+test@test.com  |  email
+test1  |  password
+
+Mike Test  |  name
+1 Test St  |  street
+Testville  |  city
+10001  |  zip code
+
+4242 4242 4242 4242  |  credit card
+12 / 20  |  expiration date
+111  |  security code
+
+For more info on using Stripe in test mode:
+https://stripe.com/docs/testing#cards
+
+## To Start from Codebase
 ```
 yarn install
 createdb 2ndDibsEcommerce
@@ -23,7 +43,7 @@ create a secrets.js file with:
 yarn start-dev
 ```
 
-## To test
+## To Test
 ```
 yarn install
 createdb 2ndDibsEcommerce-Test

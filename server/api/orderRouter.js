@@ -36,8 +36,8 @@ orderRouter.get('/user/history', (req, res, next) => {
 // get user's current order //
 orderRouter.get('/', (req, res, next) => {
   const orderQuery = getCurrentOrderQuery(
-    req.body.user || req.user,
-    req.body.orderId || req.session.sessionOrderId
+    req.user,
+    req.session.sessionOrderId
   );
 
   if (orderQuery) {

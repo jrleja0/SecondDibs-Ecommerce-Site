@@ -1,56 +1,17 @@
 const db = require('../server/db');
 const Promise = require('bluebird');
 
-const getNumberInDollars = priceString => {
-  let price = priceString.split('') // remove '$' and ',' from string
-    .reduce((string, char) => {
-      if (char !== '$' && char !== ',') {
-        return string + char;
-      } else {
-        return string;
-      }
-    }, '');
-  return Number(price); // convert to number
-};
-
-const databaseItems = require('./items.json').map(item => {
-  const newItem = Object.assign({}, item);
-  delete newItem.id;
-  newItem.key = item.id;
-  newItem.priceUSD = item.price ? getNumberInDollars(item.price.amounts.USD) : null;
-  newItem.sellerCompany = item.seller.company;
-  newItem.sellerLogo = item.seller.logo;
-  newItem.measurements = item.measurements.display;
-  return newItem;
-});
-
+const databaseItems = require('./getItems');
+const databaseUsers = require('./getUsers');
 const cacheKeywords = require('./getKeywords');
 const databaseKeywords = Object.keys(cacheKeywords).map(keyword => {
   return { name: keyword };
 });
 
-const databaseUsers = [
-  {
-    name: 'Mike Test',
-    email: 'test@test.com',
-    password: 'test1',
-  },
-  {
-    name: 'Matt Test',
-    email: 'test2@test.com',
-    password: 'test2',
-  },
-  {
-    name: 'Mel Test',
-    email: 'test3@test.com',
-    password: 'test3',
-  },
-];
-
 const data = {
   item: databaseItems,
-  keyword: databaseKeywords,
   user: databaseUsers,
+  keyword: databaseKeywords,
 };
 
 db.sync({force: true})
