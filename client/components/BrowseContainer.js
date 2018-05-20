@@ -40,6 +40,7 @@ const BrowseContainer = (props) => {
                   style={{fill: '#c2a661'}}
                 />}
                 className="button-route-browse"
+                data-name="browse"
                 hoverColor="transparent"
                 rippleColor="#c2a661"
               />
@@ -58,6 +59,7 @@ const BrowseContainer = (props) => {
                   style={{fill: '#c2a661'}}
                 />}
                 className="button-route-favorites"
+                data-name="favorites"
                 hoverColor="transparent"
                 rippleColor="#c2a661"
               />
@@ -76,6 +78,7 @@ const BrowseContainer = (props) => {
                   style={{fill: '#c2a661'}}
                 />}
                 className="button-route-search"
+                data-name="search"
                 hoverColor="transparent"
                 rippleColor="#c2a661"
               />

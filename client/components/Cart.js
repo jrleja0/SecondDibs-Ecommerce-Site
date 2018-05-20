@@ -36,6 +36,7 @@ class Cart extends React.Component {
       <div>
         <AppBar
           title="Your Cart"
+          className="cart-toolbar"
           iconElementLeft={<BackToBrowseButton />}
           style={{backgroundColor: 'white'}}
           titleStyle={styles.titleStyle}
@@ -45,6 +46,7 @@ class Cart extends React.Component {
               label="Empty"
               style={cartButtonsDisabled ? styles.emptyCartButtonDisabled : styles.flatButtonNoBorderEmptyCart}
               className={cartButtonsDisabled ? 'button-disabled' : 'cart-actions-button'}
+              data-name="emptyCart"
               hoverColor="transparent"
               rippleColor={cartButtonsDisabled ? 'transparent' : 'yellow'}
               labelPosition="before"
@@ -93,6 +95,7 @@ class Cart extends React.Component {
                   type="button"
                   style={cartButtonsDisabled ? styles.checkoutButtonDisabled : styles.flatButton}
                   className={cartButtonsDisabled ? 'button-disabled' : 'cart-actions-button'}
+                  data-name="checkout"
                   hoverColor={cartButtonsDisabled ? 'transparent' : 'rgba(0, 0, 0, 0.4)'}
                   rippleColor={cartButtonsDisabled ? 'transparent' : 'yellow'}
                 />
@@ -105,6 +108,7 @@ class Cart extends React.Component {
                 style={styles.flatButtonNoBorder}
                 labelStyle={{top: '4px'}}
                 className="cart-actions-button"
+                data-name="orderHistory"
                 hoverColor="transparent"
                 rippleColor="yellow"
               />

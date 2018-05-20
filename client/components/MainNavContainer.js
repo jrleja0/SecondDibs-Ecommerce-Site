@@ -68,6 +68,7 @@ class MainNavContainer extends React.Component {
           (
             <ToolbarGroup>
               <ToolbarTitle
+                className="welcome-user-text"
                 text={`Welcome, ${user.name.split(' ')[0]}`}
                 style={{color: '#c2a661'}}
               />
@@ -75,6 +76,7 @@ class MainNavContainer extends React.Component {
                 label="Log Out"
                 style={styles.flatButtonNoBorder}
                 className="main-nav-button"
+                data-name="logout"
                 onClick={() => {
                   this.handleGoToLink();
                   handleLogOut();
@@ -90,6 +92,7 @@ class MainNavContainer extends React.Component {
                 style={styles.flatButton}
                 labelStyle={{top: '3px'}}
                 className="main-nav-button"
+                data-name="cart"
                 containerElement={<Link to="/cart" />
                   /*<NavLink to="/cart" activeClassName="cart-button-active" />*/
                 }
@@ -107,6 +110,7 @@ class MainNavContainer extends React.Component {
                   label="Log In"
                   style={styles.flatButtonNoBorder}
                   className="main-nav-button"
+                  data-name="login"
                   onClick={() => {
                     this.handleGoToLink();
                     this.toggleOpenState('login')(loginOpen);
@@ -119,6 +123,7 @@ class MainNavContainer extends React.Component {
                   label="Sign Up"
                   style={styles.flatButtonNoBorder}
                   className="main-nav-button"
+                  data-name="signup"
                   onClick={() => {
                     this.handleGoToLink();
                     this.toggleOpenState('signup')(signupOpen);
@@ -135,6 +140,7 @@ class MainNavContainer extends React.Component {
                 style={styles.flatButton}
                 labelStyle={{top: '3px'}}
                 className="main-nav-button"
+                data-name="cart"
                 containerElement={<Link to="/cart" />
                   /*<NavLink to="/cart" activeClassName="cart-button-active" />*/
                 }
