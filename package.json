@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "start-dev": "webpack --mode=development -w & NODE_ENV='development' nodemon server",
+    "start-dev": "webpack --mode=development -w & NODE_ENV=development nodemon server",
     "start-server": "nodemon server",
     "build-client": "webpack",
     "seed": "node bin/seed.js",
-    "test": "DATABASE_URL='postgres://localhost:5432/2ndDibsEcommerce-Test' NODE_ENV='test' mocha ./test/**/*.spec.js --require babel-polyfill --require babel-register --exit"
+    "test": "DATABASE_URL='postgres://localhost:5432/2ndDibsEcommerce-Test' NODE_ENV=test mocha ./test/**/*.spec.js --require babel-polyfill --require babel-register --exit --no-timeouts",
+    "debug": "PUPPETEER_MODE=debug yarn test"
   },
   "author": "Jasiu Leja <jrleja.design@gmail.com>",
   "license": "MIT",
@@ -58,9 +59,11 @@
     "chai-things": "^0.2.0",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
+    "faker": "^4.1.0",
     "file-loader": "^1.1.11",
     "mocha": "^5.1.1",
     "node-sass": "^4.7.2",
+    "puppeteer": "^1.4.0",
     "redux-devtools-extension": "^2.13.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",

@@ -36,7 +36,8 @@ describe('Order routes', () => {
         });
     });
 
-    it('api/order/item/:itemId adds item to existing order', () => {
+    it('api/order/item/:itemId adds item to existing order', function() {
+      this.slow(150);
       return agent
         .get('/api/order')
         .expect(200)
@@ -82,7 +83,8 @@ describe('Order routes', () => {
         }));
     });
 
-    it('api/order/item/:itemId adds item to existing order', () => {
+    it('api/order/item/:itemId adds item to existing order', function() {
+      this.slow(150);
       return agent
         .post('/auth/login')
         .send({email: 'test@test.com', password: 'test1'})

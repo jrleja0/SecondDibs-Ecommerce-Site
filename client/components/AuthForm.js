@@ -143,7 +143,7 @@ class AuthForm extends React.Component {
             <List>
               <div>
               { submitErrorText ?
-                <p>{submitErrorText}</p>
+                <p className="main-error-message">{submitErrorText}</p>
                 :
                 ( authFunction === 'login' ?
                   <p>Log in to access your account:</p>

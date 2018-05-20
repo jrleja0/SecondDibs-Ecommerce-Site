@@ -141,6 +141,7 @@ class Item extends React.Component {
                           onClick={() => addItemToCart(item.id)}
                           style={styles.flatButton}
                           className={addToCartButtonClassName}
+                          data-name="addToCart"
                           rippleColor="yellow"
                           disabled={itemInCart || !item.formattedPrice || item.sold}
                         />
@@ -151,6 +152,7 @@ class Item extends React.Component {
                           onClick={() => alert('Thanks for your interest. We regret this service is not yet available. Please check back soon.')}
                           style={styles.flatButton}
                           className={makeOfferButtonClassName}
+                          data-name="makeOffer"
                           rippleColor="yellow"
                           disabled={itemInCart || item.sold}
                         />
